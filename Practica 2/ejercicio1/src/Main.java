@@ -187,13 +187,26 @@ public class Main {
     }
 
     public static void insertarEnPosicionIndicada(){
-        System.out.print("Que numero quieres el insertar: ");
-        double numero = sc.nextDouble();
-        System.out.print("En que posición lo quieres insertar:");
-        int posicion = sc.nextInt();
-        sc.nextLine();
-        numeros.add(posicion, numero);
-        System.out.println("\nEl numero en la posición " + posicion + " es: " + numeros.get(posicion) + "\n");
+        boolean error = true;
+        do {
+            try {
+                System.out.print("Que numero quieres el insertar: ");
+                double numero = sc.nextDouble();
+                System.out.print("En que posición lo quieres insertar:");
+                int posicion = sc.nextInt();
+                sc.nextLine();
+                if (posicion > numeros.size()){
+                    throw new OpcionNoValida();
+                }
+                numeros.add(posicion, numero);
+                System.out.println("\nEl numero en la posición " + posicion + " es: " + numeros.get(posicion) + "\n");
+                error = false;
+            }
+            catch (OpcionNoValida e){
+                System.out.println("** No existe esta posición **");
+            }
+
+        }while(error);
     }
 
     public static void borrarDePosicionConcreta(){
@@ -212,7 +225,7 @@ public class Main {
         }
         System.out.println("-- Numeros del ArrayList --");
         for (Double numero : numeros) {
-            System.out.println(numero + " ");
+            System.out.print(numero + "  ");
         }
         System.out.println("\nLa suma es: " + suma);
         System.out.println("La media es: " + suma / numeros.size() + "\n" );
