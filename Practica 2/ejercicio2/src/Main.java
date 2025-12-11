@@ -22,16 +22,7 @@ public class Main {
         do {
             try{
                 System.out.println("-- Guardando notas del alumno " + (numeroAlumno + 1) + " -- ");
-                notasAlumnos.add(new ArrayList<>());
-                Pattern patron = Pattern.compile("^[A-Za-z]+$");
-                System.out.print("Nombre del alumno: ");
-                String nombreAlumno = sc.nextLine();
-                Matcher mat = patron.matcher(nombreAlumno);
-                if (!mat.matches()) {
-                    throw new Error();
-                } else{
-                    nombreAlumnos.add(nombreAlumno);
-                }
+                pedirNombreAlumno();
                 for (int i = 0; i < asignaturas.length; i++) {
                     try{
                         System.out.print(nombreAlumnos.get(contadorNombreAlumno) + " esta matriculado en " + asignaturas[i] + " (si/no)? ");
@@ -63,7 +54,20 @@ public class Main {
             }
         }while(continuar);
 
-        System.out.println("\nLa nota media en Programación es: " + notaProg/(numeroAlumno));
+        System.out.println("\nLa nota media en Programación es: " + notaProg/numeroAlumno);
+    }
+
+    public static void pedirNombreAlumno() throws Error{
+        notasAlumnos.add(new ArrayList<>());
+        Pattern patron = Pattern.compile("^[A-Za-z]+$");
+        System.out.print("Nombre del alumno: ");
+        String nombreAlumno = sc.nextLine();
+         Matcher mat = patron.matcher(nombreAlumno);
+        if (!mat.matches()) {
+            throw new Error();
+        } else{
+            nombreAlumnos.add(nombreAlumno);
+        }
     }
 
     public static double pedirNota(int numeroAlumno, int i){
