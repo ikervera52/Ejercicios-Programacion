@@ -214,7 +214,7 @@ public class Main {
             try {
                 Pattern patron = Pattern.compile("^[A-Z][a-z]+ [A-Z][a-z]+$");
                 System.out.print("Modificar nombre del jugador " + nombre + ":\n "
-                + "Modificación: ");
+                        + "Modificación: ");
                 nuevoNombre = sc.nextLine();
                 Matcher mat = patron.matcher(nuevoNombre);
                 if(!mat.matches()){
