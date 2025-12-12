@@ -84,7 +84,7 @@ public class Main {
 
     public static void borrarCaducados(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        System.out.print("Desde que fecha quieres descartar productos: ");
+        System.out.print("\nDesde que fecha quieres descartar productos: ");
         LocalDate fecha = LocalDate.parse(sc.nextLine(), dtf);
 
         while(!fechas.isEmpty() && fechas.peek().isBefore(fecha) ){
