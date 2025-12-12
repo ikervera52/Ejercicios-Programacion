@@ -15,12 +15,12 @@ public class Main {
     public static LinkedList <LocalDate> fechas;
     public static void main(String[] args) {
 
-        inicializarListas();
+        inicializarColas();
         pedirProductos();
         borrarCaducados();
 
     }
-    public static void inicializarListas(){
+    public static void inicializarColas() {
         sc = new Scanner(System.in);
 
         productos = new LinkedList<>();
@@ -87,13 +87,10 @@ public class Main {
         System.out.print("Desde que fecha quieres descartar productos: ");
         LocalDate fecha = LocalDate.parse(sc.nextLine(), dtf);
 
-        LinkedList <LocalDate> caducados = new LinkedList<>(fechas);
+        while(!fechas.isEmpty() && fechas.peek().isBefore(fecha) ){
 
-        for (LocalDate fechasAnteriores: caducados){
-            if (fechasAnteriores.isBefore(fecha)){
-                fechas.remove();
-                productos.remove();
-            }
+            fechas.remove();
+            productos.remove();
         }
 
         System.out.println("\n-- Productos restantes --");
@@ -101,8 +98,7 @@ public class Main {
     }
 
     public static void imprimirLista(){
-        int repetir = productos.size();
-        for(int i = 0; i < repetir; i++){
+        for(int i = 0; i < productos.size(); i++){
             System.out.println("Nombre: " + productos.get(i) + " Fecha: " + fechas.get(i));
         }
     }
