@@ -29,13 +29,20 @@ public class Main {
             try {
                 Pattern patron = Pattern.compile("^([0-9]|[0-2][0-9]|3[0-1])");
                 System.out.print("Dia del gasto: ");
-                Matcher m = patron.matcher(sc.nextLine());
+                String diaString = sc.nextLine();
+                Matcher m = patron.matcher(diaString);
                 if (!m.matches()){
                     throw new Error();
                 }
+                int dia = Integer.parseInt(diaString);
 
                 System.out.print("Mes del gasto: ");
                 Meses mes = Meses.valueOf(sc.nextLine().toUpperCase());
+
+                if (mes.equals(Meses.FEBRERO)  && dia > 28){
+                    throw new Error("** Fecha no valida **");
+                }
+
 
                 System.out.print("Cuanto has gastado: ");
                 double gasto = sc.nextDouble();
