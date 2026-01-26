@@ -63,11 +63,8 @@ public class Main {
                     pedirDato("Teléfono", "Teléfono del cliente: ", "^[0-9]{9}$")
             ));
 
-            System.out.println("Quieres añadir más clientes: ");
-            String respuesta = sc.nextLine();
-            if (respuesta.equals("no")) {
-                continuar = false;
-            }
+
+            continuar = pedirContinuar("Quieres añadir más clientes: ");
         }
     }
     public static void crearVeterinario() {
@@ -85,11 +82,8 @@ public class Main {
                     pedirDato("NSS", "Numero de la seguridad social del veterinario: ", "^[0-9]+$")
             ));
 
-            System.out.println("Quieres añadir más veterinarios: ");
-            String respuesta = sc.nextLine();
-            if (respuesta.equals("no")) {
-                continuar = false;
-            }
+            continuar = pedirContinuar("Quieres añadir más veterinarios: ");
+
         }
     }
     public static void crearMascotas() {
@@ -114,12 +108,33 @@ public class Main {
 
                 mascotas.add(mascota);
 
-                continuar = false;
+                continuar = pedirContinuar("Quires añadir más mascotas: ");
             }
             catch (IllegalArgumentException e) {
                 System.out.println("Tipo de mascota no valido");
             }
         }
+    }
+
+    public static boolean pedirContinuar(String frase){
+        boolean continuar = true;
+        boolean error = true;
+        while (error) {
+            try {
+                System.out.print(frase);
+                String respuesta = sc.nextLine();
+                if (respuesta.equals("no")) {
+                    continuar = false;
+                    error = false;
+                } else if(respuesta.equals("si")) {
+                    error = false;
+                } else throw new Error();
+            }
+            catch (Error e) {
+                System.out.println("Opción no valida");
+            }
+        }
+        return continuar;
     }
 
     public static Cliente asociarCliente() {
@@ -231,7 +246,6 @@ public class Main {
         System.out.println(clientes.get(posicion).toString());
     }
 
-    // Peta
     public static void datosVetPorMascota(String nombreMascota){
 
         int posicion = 0;
@@ -246,7 +260,6 @@ public class Main {
         System.out.println(veterinarios.get(posicion).toString());
     }
 
-    //Peta
     public static void datosMascPorCliente(String nombreCliente){
         int posicion = 0;
         for(Mascota mascota: mascotas){
@@ -257,7 +270,6 @@ public class Main {
         System.out.println(mascotas.get(posicion).toString());
     }
 
-    //Peta
     public static void datosMascPorVet(String nombreVet){
         int posicion = 0;
         for(Mascota mascota: mascotas){
