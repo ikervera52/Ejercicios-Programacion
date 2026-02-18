@@ -45,6 +45,10 @@ public class Pedido {
     }
 
     public void setProducto(Producto producto, int cantidad) {
-        this.productos.put(producto, cantidad);
+        if(productos.containsKey(producto)){
+            int cant = productos.get(producto);
+            cant = cant + cantidad;
+            productos.put(producto, cant);
+        } else this.productos.put(producto, cantidad);
     }
 }

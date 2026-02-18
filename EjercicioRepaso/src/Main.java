@@ -176,7 +176,7 @@ public class Main {
                 int cantidad = Integer.parseInt(cantidadString);
 
                 if(cantidad > p.getStock()){
-                    throw new Error("No hay tanta cantidad de ese producto");
+                    throw new Exception();
                 }
 
                 pedido.setProducto(p, cantidad);
@@ -191,6 +191,9 @@ public class Main {
             catch (Error e){
                 System.out.println("No existe ese producto");
             }
+            catch (Exception e){
+                System.out.println("No hay suficiente stock");
+            }
         }while (!salir);
 
         usuario.setPedido(pedido);
@@ -198,7 +201,7 @@ public class Main {
     }
 
     public static boolean salirDePedido(){
-        boolean error = false;
+        boolean error = true;
         boolean salir = true;
         do {
             try {
@@ -206,13 +209,13 @@ public class Main {
                 String respuesta = sc.nextLine();
                 if(respuesta.equals("si")){
                     salir = false;
+                    error = false;
                 } else if (respuesta.equals("no")){
-                    salir = true;
+                    error = false;
                 } else throw new Error();
             }
             catch (Error e){
                 System.out.println("Opción no valida");
-                error = true;
             }
 
         }while (error);
