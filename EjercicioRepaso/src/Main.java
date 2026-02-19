@@ -1,3 +1,4 @@
+import Excepciones.CantidadNoValida;
 import Modelo.Pedido;
 import Modelo.Producto;
 import Modelo.Usuario;
@@ -34,7 +35,7 @@ public class Main {
 
         Producto producto1 = new Producto("platano", 1F, 9);
         Producto producto2 = new Producto("manzana", 3F, 12);
-        Producto producto3 = new Producto("pizza", 2F, 8);
+        Producto producto3 = new Producto("melon", 2F, 8);
         Producto producto4 = new Producto("pizza", 2F, 8);
 
         productos.add(producto1);
@@ -143,19 +144,24 @@ public class Main {
     }
 
     public static void hacerPedido(){
-        System.out.println("Que usuario va a hacer el pedido: ");
-        String nombreUsuario = sc.nextLine();
+        try{
+            System.out.println("Que usuario va a hacer el pedido: ");
+            String nombreUsuario = sc.nextLine();
 
-        // Comprobar que exista este usuario
-        Usuario usuario = usuarios.stream()
-                .filter(u -> u.getNombre().equals(nombreUsuario))
-                .findFirst().orElse(null);
+            // Comprobar que exista este usuario
+            Usuario usuario = usuarios.stream()
+                    .filter(u -> u.getNombre().equals(nombreUsuario))
+                    .findFirst().orElse(null);
 
-        if(usuario == null){
-            throw new Error();
+            if(usuario == null){
+                throw new Error();
+            }
+
+            pedirProductos(usuario);
         }
-
-        pedirProductos(usuario);
+        catch (Error e){
+            System.out.println("Ese usuario no existe");
+        }
     }
 
     public static void pedirProductos(Usuario usuario){
@@ -164,7 +170,14 @@ public class Main {
 
         do {
             try {
-                System.out.println("Que producto quieres añadir al carrito: ");
+                System.out.println("\n-- Productos disponibles --");
+                for(Producto producto : productos){
+                    if (producto.getStock() > 0){
+                        System.out.println(producto.getNombre() + " --> " + producto.getStock() + " unidades");
+                    }
+                }
+
+                System.out.println("\nQue producto quieres añadir al carrito: ");
                 String producto = sc.nextLine();
                 Producto p = productos.stream().filter(u -> u.getNombre().equals(producto)).findFirst().orElse(null);
 
@@ -174,6 +187,10 @@ public class Main {
 
                 String cantidadString = validarDatos("Cantidad", "Cuantos quieres: ", "^[0-9]+$");
                 int cantidad = Integer.parseInt(cantidadString);
+
+                if (cantidad < 0){
+                    throw new CantidadNoValida();
+                }
 
                 if(cantidad > p.getStock()){
                     throw new Exception();
@@ -191,9 +208,13 @@ public class Main {
             catch (Error e){
                 System.out.println("No existe ese producto");
             }
+            catch (CantidadNoValida e){
+                System.out.println("La cantidad no puede ser menor a cero");
+            }
             catch (Exception e){
                 System.out.println("No hay suficiente stock");
             }
+
         }while (!salir);
 
         usuario.setPedido(pedido);
