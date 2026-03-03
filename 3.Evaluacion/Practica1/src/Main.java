@@ -1,12 +1,12 @@
-import Vista.MenuControlador;
+import Vista.MenuPrincipal;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
 
-        MenuControlador controlador = new MenuControlador();
-        controlador.menuOpciones();
+        MenuPrincipal menuPrincipal = new MenuPrincipal();
+        menuPrincipal.menuGeneral();
 
     }
 }

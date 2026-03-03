@@ -6,14 +6,17 @@ public class Titular {
     private String dni;
     private int id;
 
+    public Titular(int id){
+        this.id=id;
+    }
     public Titular(String nombre, String dni) {
         this.nombre = nombre;
         this.dni = dni;
     }
     public Titular(int id, String nombre, String dni) {
+        this.id = id;
         this.nombre = nombre;
         this.dni = dni;
-        this.id = id;
     }
 
     public String getNombre() {

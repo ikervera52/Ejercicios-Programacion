@@ -5,20 +5,19 @@ import Modelo.Titular;
 import Utilidades.ValidarDatos;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class MenuControlador {
+public class MenuTitulares {
 
-    private Scanner sc;
+    private static Scanner sc;
 
-    public void menuOpciones(){
+    public static void menuOpciones(){
         sc = new Scanner(System.in);
         boolean salir = false;
         do {
             try{
                 System.out.print("""
-                --- Menú de opciones ---
+                ==== Menú de Titulares ====
                 a) Crear titular
                 b) Borrar titular
                 c) Editar titular
@@ -27,6 +26,7 @@ public class MenuControlador {
                 f) Ver titular por nombre
                 g) Ver titular por DNI
                 h) Salir
+                ===========================
                 Que quieres hacer:\s""");
                 String respuesta = sc.nextLine();
                 switch (respuesta){
@@ -48,7 +48,7 @@ public class MenuControlador {
         }while(!salir);
     }
 
-    public void verTodosTitulares(){
+    private static void verTodosTitulares(){
         ArrayList<Titular> titulares = TitularControlador.obtenerTodosTitular();
 
         for(Titular t: titulares){
@@ -56,7 +56,7 @@ public class MenuControlador {
         }
     }
 
-    public void crearTitular(){
+    private static void crearTitular(){
         try {
             String nombre = ValidarDatos.validarDatos(sc, "Nombre", "Nombre del titular: ", "^[A-Za-z]+$");
             String dni = ValidarDatos.validarDatos(sc, "DNI", "DNI del titular: ", "^[0-9]{8}[A-Z]$");
@@ -66,7 +66,7 @@ public class MenuControlador {
         }
     }
 
-    public void borrarTitular(){
+    private static void borrarTitular(){
         String dni = ValidarDatos.validarDatos(sc, "DNI", "DNI del titular: ", "^[0-9]{8}[A-Z]$");
         try {
             TitularControlador.borrarTitular(dni);
@@ -76,7 +76,7 @@ public class MenuControlador {
         }
     }
 
-    public void editarTitular(){
+    private static void editarTitular(){
         String dniTitular = ValidarDatos.validarDatos(sc, "DNI", "DNI del titular que quieres editar: ", "^[0-9]{8}[A-Z]$");
 
         boolean salir = false;
@@ -108,7 +108,7 @@ public class MenuControlador {
         }while(!salir);
     }
 
-    public void editarNombre(String dniTitular){
+    private static void editarNombre(String dniTitular){
         try {
             String nuevoNombre = ValidarDatos.validarDatos(sc, "Nuevo nombre", "Nuevo nombre del titular: ", "^[A-Za-z]+$");
             TitularControlador.editarNombre(nuevoNombre, dniTitular);
@@ -119,7 +119,7 @@ public class MenuControlador {
         }
     }
 
-    public void editarDni(String dniAntiguo){
+    private static void editarDni(String dniAntiguo){
         try{
             String dniNuevo = ValidarDatos.validarDatos(sc, "Nuevo DNI", "Nuevo DNI del titular: ", "^[0-9]{8}[A-Z]$");
             TitularControlador.editarDni(dniAntiguo, dniNuevo);
@@ -130,12 +130,12 @@ public class MenuControlador {
         }
     }
 
-    public void verTitularPorId(){
+    private static void verTitularPorId(){
             String id = ValidarDatos.validarDatos(sc, "ID", "ID del titular: ", "^[0-9]+$");
             System.out.println(TitularControlador.verTitularPorId(id));
     }
 
-    public void verTitularPorNombre(){
+    private static void verTitularPorNombre(){
             String nombre = ValidarDatos.validarDatos(sc, "Nombre", "Nombre del titular: ", "^[A-Za-z ]+$");
             ArrayList<Titular> titulares = TitularControlador.verTitularPorNombre(nombre);
             if(titulares.isEmpty()){
@@ -147,7 +147,7 @@ public class MenuControlador {
             }
     }
 
-    public void verTitularPorDni(){
+    private static void verTitularPorDni(){
         String dni = ValidarDatos.validarDatos(sc, "DNI", "DNI del titular: ", "^[0-9]{8}[A-Z]$");
         Titular titular = TitularControlador.verTitularPorDni(dni);
 
